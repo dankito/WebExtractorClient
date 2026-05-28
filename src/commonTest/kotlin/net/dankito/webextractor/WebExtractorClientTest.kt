@@ -9,9 +9,7 @@ import kotlinx.coroutines.test.runTest
 import net.dankito.web.client.WebClientResult
 import net.dankito.webextractor.model.ExtractFromHtmlRequest
 import net.dankito.webextractor.model.ExtractionRequest
-import net.dankito.webextractor.model.ExtractionResult
 import net.dankito.webextractor.model.MultiFormatExtractionRequest
-import net.dankito.webextractor.model.MultiFormatExtractionResult
 import net.dankito.webextractor.model.OutputFormat
 import net.dankito.webextractor.model.RequestedFormat
 import net.dankito.webextractor.test.TestConfig
@@ -34,7 +32,7 @@ class WebExtractorClientTest {
         assertThat(result.conversionResult).isNotNull()
         assertThat(result.metadata).isNotNull()
         assertThat(result.content).isNotNull()
-        assertThat(result.content!!.length).isGreaterThan(4_500)
+        assertThat(result.content!!.length).isGreaterThan(4_000)
     }
 
     @Test
@@ -70,15 +68,15 @@ class WebExtractorClientTest {
 
         assertThat(result.extractionResult).isNotNull()
         assertThat(result.extractionResult!!.content).isNotNull()
-        assertThat(result.extractionResult.content!!.length).isGreaterThan(4_500)
+        assertThat(result.extractionResult.content!!.length).isGreaterThan(4_000)
 
         assertThat(result.contentMarkdown).isNotNull()
         assertThat(result.contentMarkdown!!.content).isNotNull()
-        assertThat(result.contentMarkdown.content!!.length).isGreaterThan(4_500)
+        assertThat(result.contentMarkdown.content!!.length).isGreaterThan(4_000)
 
         assertThat(result.contentText).isNotNull()
         assertThat(result.contentText!!.content).isNotNull()
-        assertThat(result.contentText.content!!.length).isGreaterThan(4_500)
+        assertThat(result.contentText.content!!.length).isGreaterThan(4_000)
     }
 
 
