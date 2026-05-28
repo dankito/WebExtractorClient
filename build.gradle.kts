@@ -8,6 +8,18 @@ plugins {
 group = "net.dankito.webextractor"
 version = "1.0.0-SNAPSHOT"
 
+ext["customArtifactId"] = "web-extractor-client"
+
+ext["sourceCodeRepositoryBaseUrl"] = "github.com/dankito/WebExtractorClient"
+
+ext["projectDescription"] = "Kotlin Multiplatform Client for WebExtractor (https://github.com/dankito/WebExtractorClient)"
+
+
+kotlin {
+    jvmToolchain(21)
+}
+
+
 repositories {
     mavenCentral()
 }
@@ -37,10 +49,11 @@ dependencies {
     testImplementation("ch.qos.logback:logback-classic:$logbackVersion")
 }
 
-kotlin {
-    jvmToolchain(21)
-}
-
 tasks.test {
     useJUnitPlatform()
+}
+
+
+if (file("./gradle/scripts/publish-dankito.gradle.kts").exists()) {
+    apply(from = "./gradle/scripts/publish-dankito.gradle.kts")
 }
