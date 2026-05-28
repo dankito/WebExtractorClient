@@ -14,7 +14,7 @@ import net.dankito.webextractor.model.MultiFormatExtractionResult
 
 open class WebExtractorClient(
     private val baseUrl: String,
-    private val webClient: WebClient = KtorWebClient()
+    private val webClient: WebClient = Instances.DefaultWebClient
 ) {
 
     open suspend fun extract(request: ExtractionRequest): WebClientResult<ExtractionResult> =
