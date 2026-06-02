@@ -4,8 +4,6 @@ import net.dankito.web.client.ContentTypes
 import net.dankito.web.client.RequestParameters
 import net.dankito.web.client.WebClient
 import net.dankito.web.client.WebClientResult
-import net.dankito.web.client.serialization.KotlinxJsonSerializer
-import net.dankito.web.client.serialization.Serializer
 import net.dankito.webextractor.model.ExtractFromHtmlRequest
 import net.dankito.webextractor.model.ExtractFromHtmlResult
 import net.dankito.webextractor.model.ExtractionRequest
@@ -16,7 +14,6 @@ import net.dankito.webextractor.model.MultiFormatExtractionResult
 open class WebExtractorClient(
     protected val baseUrl: String,
     protected val webClient: WebClient = Instances.DefaultWebClient,
-    protected val serializer: Serializer = KotlinxJsonSerializer(),
 ) {
 
     open suspend fun extract(request: ExtractionRequest): WebClientResult<ExtractionResult> =
