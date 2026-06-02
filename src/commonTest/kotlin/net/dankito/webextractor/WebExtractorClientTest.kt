@@ -9,6 +9,7 @@ import kotlinx.coroutines.test.runTest
 import net.dankito.web.client.WebClientResult
 import net.dankito.webextractor.model.ExtractFromHtmlRequest
 import net.dankito.webextractor.model.ExtractionRequest
+import net.dankito.webextractor.model.MarkdownConverterOptions
 import net.dankito.webextractor.model.MultiFormatExtractionRequest
 import net.dankito.webextractor.model.OutputFormat
 import net.dankito.webextractor.model.RequestedFormat
@@ -77,6 +78,17 @@ class WebExtractorClientTest {
         assertThat(result.contentText).isNotNull()
         assertThat(result.contentText!!.content).isNotNull()
         assertThat(result.contentText.content!!.length).isGreaterThan(4_000)
+    }
+
+
+    @Test
+    fun convertHtmlToMarkdown() = runTest {
+        val response = client.convertHtmlToMarkdown(TestData.Html, MarkdownConverterOptions())
+
+        val result = assertSuccess(response)
+
+        assertThat(result.content).isNotNull()
+        assertThat(result.content!!.length).isGreaterThan(4_000)
     }
 
 

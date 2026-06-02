@@ -8,6 +8,8 @@ import net.dankito.webextractor.model.ExtractFromHtmlRequest
 import net.dankito.webextractor.model.ExtractFromHtmlResult
 import net.dankito.webextractor.model.ExtractionRequest
 import net.dankito.webextractor.model.ExtractionResult
+import net.dankito.webextractor.model.MarkdownConversionResult
+import net.dankito.webextractor.model.MarkdownConverterOptions
 import net.dankito.webextractor.model.MultiFormatExtractionRequest
 import net.dankito.webextractor.model.MultiFormatExtractionResult
 
@@ -27,6 +29,14 @@ open class WebExtractorClient(
     open suspend fun extractMultipleResponseFormats(request: MultiFormatExtractionRequest): WebClientResult<MultiFormatExtractionResult> =
         webClient.post(RequestParameters(url("/extract/multiple"), MultiFormatExtractionResult::class,
             request, ContentTypes.JSON, ContentTypes.JSON))
+
+    open suspend fun convertHtmlToMarkdown(html: String, options: MarkdownConverterOptions? = null): WebClientResult<MarkdownConversionResult> =
+        webClient.post(RequestParameters(url("/convert"), MarkdownConversionResult::class,
+            html, "text/html", ContentTypes.JSON, queryParameters = buildMap {
+                if (options?.converters.isNullOrEmpty().not()) {
+                    put("converter", options.converters[0].name.lowercase())
+                }
+            }))
 
 
     protected open fun url(path: String): String =
