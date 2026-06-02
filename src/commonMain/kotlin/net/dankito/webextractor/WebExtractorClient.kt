@@ -1,10 +1,9 @@
 package net.dankito.webextractor
 
-import net.dankito.web.client.KtorWebClient
+import net.dankito.web.client.ContentTypes
 import net.dankito.web.client.RequestParameters
 import net.dankito.web.client.WebClient
 import net.dankito.web.client.WebClientResult
-import net.dankito.web.client.post
 import net.dankito.web.client.serialization.KotlinxJsonSerializer
 import net.dankito.web.client.serialization.Serializer
 import net.dankito.webextractor.model.ExtractFromHtmlRequest
@@ -21,23 +20,20 @@ open class WebExtractorClient(
 ) {
 
     open suspend fun extract(request: ExtractionRequest): WebClientResult<ExtractionResult> =
-        webClient.post(url("/extract"), serialize(request))
+        webClient.post(RequestParameters(url("/extract"), ExtractionResult::class,
+            request, ContentTypes.JSON, ContentTypes.JSON))
 
     open suspend fun extractFromHtml(request: ExtractFromHtmlRequest): WebClientResult<ExtractFromHtmlResult> =
         webClient.post(RequestParameters(url("/extract/html"), ExtractFromHtmlResult::class,
-            request.html, "text/html", "text/markdown", queryParameters = createQueryParameters(request)))
+            request.html, "text/html", ContentTypes.JSON, queryParameters = createQueryParameters(request)))
 
     open suspend fun extractMultipleResponseFormats(request: MultiFormatExtractionRequest): WebClientResult<MultiFormatExtractionResult> =
-        webClient.post(url("/extract/multiple"), serialize(request))
+        webClient.post(RequestParameters(url("/extract/multiple"), MultiFormatExtractionResult::class,
+            request, ContentTypes.JSON, ContentTypes.JSON))
 
 
     protected open fun url(path: String): String =
         "$baseUrl$path"
-
-
-    protected open fun serialize(request: ExtractionRequest): String = serializer.serialize(request)
-
-    protected open fun serialize(request: MultiFormatExtractionRequest): String = serializer.serialize(request)
 
 
     protected open fun createQueryParameters(request: ExtractFromHtmlRequest): Map<String, Any> = buildMap {
