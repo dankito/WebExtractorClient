@@ -99,15 +99,17 @@ kotlin {
         val kotlinCoroutinesVersion: String by project
         val kotlinxSerializationVersion: String by project
         val webClientVersion: String by project
+        val jacksonVersion: String by project
 
         val assertKVersion: String by project
         val logbackVersion: String by project
 
         commonMain.dependencies {
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${kotlinCoroutinesVersion}")
-            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:${kotlinxSerializationVersion}")
-            api("net.dankito.web:web-client-api:${webClientVersion}")
-            implementation("net.dankito.web:ktor-web-client:${webClientVersion}")
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")
+            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinxSerializationVersion")
+
+            api("net.dankito.web:web-client-api:$webClientVersion")
+            implementation("net.dankito.web:ktor-web-client:$webClientVersion")
         }
 
         commonTest.dependencies {
@@ -117,6 +119,9 @@ kotlin {
             implementation("com.willowtreeapps.assertk:assertk:$assertKVersion")
         }
 
+        jvmMain.dependencies {
+            implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
+        }
         jvmTest.dependencies {
             implementation("ch.qos.logback:logback-classic:$logbackVersion")
         }
